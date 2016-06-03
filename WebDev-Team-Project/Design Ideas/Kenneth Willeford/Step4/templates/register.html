@@ -1,0 +1,50 @@
+<DOCTYPE! HTML>
+<html>
+	<head>
+		<title>Lorem Ipsum</title>
+	</head>
+	<body style="background-color:black;">
+	<style>
+		p{color:white;}
+	</style>
+		<p>Register
+		<br>
+		<div style="color:red;" id="errorText"></div>
+				<form action="javascript:userCheck()">
+					<p>Username<br><input type="text" id="userNameInput"></p>
+					<p>Password<br><input type="password" id="userPasswordInput"></p>
+					<p>Email<br><input type="email" id="userEmailInput"></p>
+					<p> <input type="submit"></p>
+		</p>
+		<p>
+		Already a user? <a href="/login">Log In</a>.
+		</p>
+	</body>
+	<script>
+		var redirect = function(url, method) {
+			var form = document.createElement('form');
+			form.method = method;
+			form.action = url;
+			form.submit();
+		};
+		function userCheck(){
+			username = document.getElementById("userNameInput").value
+			password = document.getElementById("userPasswordInput").value
+			email = document.getElementById("userEmailInput").value
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					if(xhttp.responseText == "exists"){
+						
+						alert("That Username Already Exists.");
+					} else {
+						redirect('/register/?username='+username+'&password='+password+'&email='+email, 'post');
+					};
+				};
+			};
+			xhttp.open("GET", "/usernameexists/?username=" + document.getElementById("userNameInput").value, true);
+			xhttp.send();
+		};
+	</script>
+</html>
+	

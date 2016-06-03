@@ -1,0 +1,127 @@
+<!DOCTYPE> <!--For some reason if we have the "!" placed before DOCTYPE, the navigation drop-down fails to work.-->
+<html>
+<head>
+    <title>Badass Blogs</title>
+    <link rel="stylesheet" type="text/css" href="../public/css/{{.BlogCSS}}.css">
+</head>
+<!-- Navigation Bar -->
+<div id="nav" class = "autotext">
+    <!-- Logo -->
+    <div class="basicBorder logo"></div>
+    <!-- Navigation Section -->
+    <div class="basicBorder navSection">
+        <div class="basicBorder dropdown">
+				<span style="color:blue">
+					Navigation
+				</span>
+            <div class="basicBorder dropDownItems">
+                <ul>
+                    <li>
+                        <a href="http://google.com">Google</a>
+                    </li>
+                    <br>
+                    <li>
+                        <a href="https://github.com/SSBMFreak/WebDev-Team-Project">Team Website</a>
+                    </li>
+					<li>
+					<div>
+						<!-- TOP Button: warps to 'Above the fold' from anywhere on webpage -->
+						<a href="#top"> <!--implicit anchor -->
+							<!-- Make svg container 100x100 large -->
+							<svg height="100" width="100"> <!-- scalable vector graphic -->
+								<!-- Make Circle of Radius 30 with an offset of x=50 and y=50 with a black border and maroon interior. -->
+								<circle cx="50" cy="50" r="30" stroke="rgba(0,0,0,0.3)" stroke-width="4" fill="rgba(0,0,0,0.2)" />
+								<!-- Place Text on top of the circle, Refer to the Circle for rest of the details. -->
+								<text x="29" y="56" font-family="Courier New" font-size="25" fill="blue" > TOP </text>
+							</svg>
+						</a>
+					</div>
+					</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Log In -->
+    <div class="basicBorder login">
+                {{if .Edit}}<a href= "/edituser" class="button">Edit Info</a>{{end}} | <a href= "{{.Url}}" class="button">{{.UrlText}}</a>
+    </div>
+</div>
+<body>
+<!-- Above the Fold Section -->
+<div id="atf">
+    <!-- Above the Fold Contend Container -->
+    <div id = "content">
+        <p class = "title" id = "blogt">{{.BlogTitle}}</p>
+        <p class = "textbody" id = "blogtb">{{.BlogTitleBody}}</p>
+    </div>
+</div>
+<br>
+<!-- Below the Fold Element-->
+<div id ="btf">
+    <!-- 'Left Column', on right with flexbox -->
+    <div id = "leftColumn">
+        <p class = "title" id = "leftt">{{.LeftTitle}}</p>
+        <p class = "textbody" id = "leftb">{{.LeftBody}}</p>
+    </div>
+    <!-- Main Content Section of Below the Fold, stays even on mobile -->
+    <div class = "content">
+        <p class="textbody" id = "blogb">{{.BlogBody}}</p>
+    </div>
+    <!-- 'Right Column', on left with flexbox -->
+    <div id = "rightColumn">
+        <p class = "title" id = "rightt">{{.RightTitle}}</p>
+        <p class ="textbody" id = "rightb">{{.RightBody}}</p>
+    </div>
+</div>
+{{range $index, $element := .Images}} 
+	<p><img src = https://storage.googleapis.com/essys-bucket/{{$element}}> </p>
+{{end}}
+{{range $index, $element := .Comments}} 
+	<br><p class="textbody"> {{$element}} </p><br>
+{{end}}
+<p>
+		<p><textarea rows="10" cols="50" id="comment"></textarea></p>
+		<p><button onclick="postComment()">POST COMMENT</button></p>
+</p>
+<p id = {{.URL}}></p>
+<script>
+	function postComment(){
+		comment = document.getElementById("comment").value;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				document.getElementById("comment").value = "Thank You, the Comment Has Been Posted";
+			};
+		};
+		xhttp.open("GET", "/postcomment/?user=" + "{{.URL}}" + "&comment="+ comment, true);
+		xhttp.send();		
+	}
+</script>
+<!-- Footer Element -->
+<div id="footer">
+    <p class="textfooterL" id="footerll">{{.FooterLeft}}</p>
+    <p class=" textfooterR" id="footerrr">{{.FooterRight}}</p>
+</div>
+<script>
+	function markify(selection){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+					document.getElementById(selection).innerHTML = xhttp.responseText;
+			};
+		};
+		xhttp.open("POST", "https://api.github.com/markdown/raw", true);
+		xhttp.send(document.getElementById(selection).innerHTML);
+	};	
+	markify("blogt")
+	markify("blogtb")
+	markify("leftt")
+	markify("leftb")
+	markify("blogb")
+	markify("rightt")
+	markify("rightb")
+	markify("footerll")
+	markify("footerrr")
+</script>
+</body>
+</html>

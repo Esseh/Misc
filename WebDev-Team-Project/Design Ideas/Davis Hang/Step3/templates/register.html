@@ -1,0 +1,44 @@
+<DOCTYPE! HTML>
+<html>
+	<head>
+		<title>Lorem Ipsum</title>
+	</head>
+	<body style="background-color:black;">
+	<style>
+		p{color:white;}
+	</style>
+		<p>Register
+				<p>Username: <input type="text" id="userNameInput"></p>
+				<p>Password: <input type="password" id="userPasswordInput"></p>
+				<p><button onclick="userCheck()">Submit</button></p>
+		</p>
+		<p>
+		Already a user? <a href="/login">Log In</a>.
+		</p>
+	</body>
+	<script>
+		var redirect = function(url, method) {
+			var form = document.createElement('form');
+			form.method = method;
+			form.action = url;
+			form.submit();
+		};
+		function userCheck(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					if(xhttp.responseText == "exists"){
+						alert("That Username Already Exists.");
+					} else {
+						username = document.getElementById("userNameInput").value
+						password = document.getElementById("userPasswordInput").value
+						redirect('/register/?username='+username+'&password='+password, 'post');
+					};
+				};
+			};
+			xhttp.open("GET", "/usernameexists/?username=" + document.getElementById("userNameInput").value, true);
+			xhttp.send();
+		};
+	</script>
+</html>
+	

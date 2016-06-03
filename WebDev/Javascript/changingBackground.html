@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+</title>
+</head>
+<body>
+	<div id = "container" style = "position:relative;">
+		<div id = "background" style = "position:absolute;z-index: -1;">
+		</div>
+			<br><p>Foreground text.</p>
+	</div>
+	</style>
+	<script type="text/javascript">
+		var background = ["1.jpg","2.jpg","3.jpg"];
+		var inspiringQuotes = ["This is inspiring.","This also!","This one is misquoted!"];
+		var currentIndex = 0;
+		window.setInterval(function(){
+			currentIndex = ( currentIndex + 1 ) % 3;
+			var val = background[currentIndex];
+			document.body.style.backgroundImage = "url('"+val+"')";
+			document.getElementById("background").innerHTML = inspiringQuotes[currentIndex];
+		},4000);
+		alert("working");
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+<body>
+	{{if  .Uuid}}
+		{{.Uuid}}
+	{{else}}
+		Error: No Uuid
+	{{end}}
+</body>
+</head>
+</html>

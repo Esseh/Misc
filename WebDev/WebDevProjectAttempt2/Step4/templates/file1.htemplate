@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+<body>
+	{{if  .Uuid}} Your UUID: {{.Uuid}}{{else}}{{end}}<br>
+	{{if  .Name}} Your Name: {{.Name}}{{else}}{{end}}<br>
+	{{if  .Age }} Your Age : {{.Age }}{{else}}{{end}}<br>
+	<form method = "POST"  enctype="multipart/form-data">
+			Input Name: <input type="text" name="name"><br>
+			Input Age : <input type="text" name="age" ><br>
+			<input type="submit">
+	</form>
+</body>
+</head>
+</html>

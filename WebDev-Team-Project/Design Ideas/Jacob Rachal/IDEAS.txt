@@ -1,0 +1,83 @@
+(4/20/2016)  Hello there! This is Jacob Rachal with a couple of project ideas and such.  So let's get started!
+NOTE: IF YOU AREN'T JACOB RACHAL, THEN DON'T BLOODY CHANGE THIS FILE!!
+            Thank You.
+
+- Have multiple page styles for whatever website we decide to make, and allow the user(after logging in)
+    to switch their page style, but only from their perspective (aka on their machine).
+        Purpose: simply changing the asthetics of the website from the user's perspective. Keeps things fresh.
+
+- Have things set up to allow the makers of the website to upload new page styles,
+    and when a user logs in post-upload or refreshes a page, there is a notice about a new style (or styles)
+    that is availible for use.
+
+- Starter Style Ideas:
+    - some sort of a generic starter/introduction-for-new-users pages style.
+    - "WW2 USN DC iz OP" Have the background loop through images of the Navy ships with famous stories about
+       how when their bow/other-part got shot off, they were able to limp back to safety due to their
+       Damage Control teams. Perhaps also include a short blurb about each ship?
+    - "FluffyHappyKitties" Has a background that iterates thrugh images of kittens.
+       Also makes the fonts/buttons/etc. very kid-like and 'happy'.
+    - Steampunk
+    - Mountains
+    - Forrest
+    - Space
+    - River
+
+
+(4/21/2016) DESIGN
+- team name:: CRWH ("crew"), because RWBY team-naming-schemes is different and interesting!
+-GENERAL
+    - when in mobile form, have a font-resizer drop-down menu show up amongst the top of the screen.
+    - have things that are not there/hidden on the mobile version that would otherwise be there on desktop screen.
+        - For example, instead of having the full bios in the footer, have the CRWH placed vertically with
+           team member names placed by their last name initial.
+          EX:
+             Cazarez, Arlene
+             Rachal, Jacob
+             Willeford, Kenneth
+             Hang, Davis
+    - have the main bar remain in place at the top of the browser window when scrolling, for all screen sizes.
+    - Designate a above-the-fold background/picture and a below-the-fold background?
+
+ - Below the fold
+    - have the team members be in the bottom section of the page, amongst all the copyright and source information.
+    - just have a bunch of lorem ispum text below the fold in dated text boxes?
+
+(4/25/16) MORE THINGS
+- In nav menu, have an About Us/Mission Statement page. A contact Us/Report A Bug button?
+- the people that are users and log in can participate in discussions and debates on the website topic.
+- Allow users to rate posts as Informative, Funny, Like+1, Facepalm, Heartwarming, WTF, tl;dr, and so on.
+-- NEED to attach the TOP button to the below the fold.
+
+Questions to be asked:
+Something about flexbox (what elements were used to create it)? need more
+- Flexbox was used for the general orientation of elements. Applied to the nav bar as well as the main content below the fold.
+
+what did we use media queries for? What does it do? How did it affect the page?
+- We querried the screens width and if it goes below 400 pixels, it removes the left & right columns of the main content as well as the footer image.
+
+What parts of the web page are above-the-fold?
+- the navigation bar(including the nav drop-down menu), the "TOP" button, and anything in the #atf container. And the background.
+
+What is the svg object? Does it work?
+- It is the "TOP" button, a 100X100 svg container, then we made a circle with a maroon fill and a thick stroke, and then we made a svg-text object with the text "TOP".
+  Yes.
+
+PLANS FOR THE FUTURE (5-2-16)
+Since I didn't manage to get anything done for this project over the weekend, haves some crazy ideas of what we can make for the website.
+  I am thinking of a wierd mashup of Twitter, MOCpages, and a forum, where the purpose of the site is to find and share crazy-awesome-badass things.
+    (Things being defined as tales from history, recent events, inventions, amazing videos, must-read fiction, what-have-you.)
+  Some things that the first users (us) and mods could link to could be:
+   - the Badass Of The Week site (Trope- What It Says On the Lid) (short description here) (url here)
+   - The Ballard of Edgardo (short description here)(url here)
+   - the incredible WH40K Quest "Embers in the Dawn" (short description here)(url here)
+   - RWBY Red Trailer (short description)(url here)
+   - "Sand Won't save you This Time" blog post (url here)
+   - Incredible quotes (miscelaneous)
+   - get other things from teammates
+   - Top Gear videos: Ariel Atom, Mobile Cottage, others,
+   -- store the uuid also in the URL (?) so that if a user has cookies disabled, they can still yse the website. Kenneth thinks this is a poor idea since we may as well just use the URL instead of cookies.
+   - colinfuze's(?) channel.
+   - a spoiler feature to hide whatever it is the user is sharing in case it is quite spoilery for a series.
+   - Allow other users to comment on a post someone made.
+

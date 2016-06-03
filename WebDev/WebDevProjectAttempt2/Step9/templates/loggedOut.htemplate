@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+<body>
+	<form method = "POST" action = "/login">
+			<input type="submit" value = "Log In">
+	</form>
+</body>
+</head>
+</html>

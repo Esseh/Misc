@@ -1,0 +1,13 @@
+defaultCookie			[X]
+handlerHome			[LAST]
+handlerRetrieve			[LAST]
+handlerStore			[LAST]
+main				[X]
+
+
+
+retrieveFromDatastore		[-]
+retrieveFromMemcache		[-]
+storeInDatastore		[X]
+storeInMemcache			[-]
+

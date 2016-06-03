@@ -1,0 +1,60 @@
+login(req,res)
+	_ , loggedIn := AlreadyLoggedIn()
+	if(loggedIn) redirect(/) else LogInTo(req,res)
+		
+
+register(req,req)
+	_ , loggedIn := AlreadyLoggedIn()
+	if(loggedIn) redirect(/) else MakeAccount(req,res)
+	
+
+
+
+LoginTo(req,req)
+	req.Method == POST{
+		goodInfo := AlreadyExists(req,res)
+		if(goodInfo){ 
+			setCookieFromDataStore(req,res)           // the username+password key will map to a UUID, 
+							          //likewise the UUID key will map to a username and a password
+			redirect(/)
+		}
+	} else execute(login.html) // AJAX will confirm if the username exists or not.
+
+
+MakeAccount(req,res)
+	req.Method == POST{
+		goodInfo := !AlreadyExists(req,res)
+		if(goodInfo){
+			makeDataStoreEntries(req,res)
+		 	setCookieFromDataStore(req,res)
+			redirect(/)
+		}
+	} else execute(register.html)  // AJAX will confirm if the username exists or not.
+
+
+
+
+AlreadyLoggedIn() -> cookie,boolean
+	cookie, err := req.cookie(session-info)
+	if err != nil {
+		return cookie,true	
+	}
+	return cookie, false	
+
+
+
+AlreadyExists(req,res) -> bool
+	result := userInMemcache(req,res)
+	if(result == false){
+		result := userInDataStore(req,res) // if returns true will also move into memcache
+	}
+	return result
+
+
+setCookieFromDataStore(req,res)
+	// MAGIC, make sure to do memcache checks too
+
+makeDataStoreEntries(req,res)
+	// MAGIC, make sure to do memcache checks too
+
+userInDataStore(req,res)

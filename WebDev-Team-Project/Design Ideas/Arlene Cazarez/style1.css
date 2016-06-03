@@ -1,0 +1,139 @@
+html{
+    padding:0;
+    margin:0;
+}
+body {
+    /*Background Image Set*/
+   /* background-image:url("background.jpg");
+    /*Background Image Stretched to Cover Screen*/
+   /* background-size:cover;*/
+    /*Background is Fixed in Place so it doesn't move while scrolling.*/
+    background-attachment:fixed;
+    /*Removed Background Margins*/
+    margin:0;
+}
+.logo{
+    background-image:url("lorem-ipsum-logo.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.login{
+    width:50%;
+    height:50%;
+}
+
+.title{
+    color:white;
+    font-size:4.5vmin;
+    text-align:center;
+    font-family: Courier New;
+}
+
+.textbody{
+    padding-left:5%;
+    padding-right:2%;
+    color:white;
+    font-size:4.0vmin;
+    font-family: Courier New;
+}
+
+#nav{
+    background-color: #4C0A38;
+    color:white;
+    position: fixed;
+    z-index: 3000;
+    width: 100%;
+    height: 10%;
+    margin:0;
+}
+#atf{
+
+    background-image:url("one.jpg");
+    /*Background Image Stretched to Cover Screen*/
+    background-size:cover;
+    /*Background is Fixed in Place so it doesn't move while scrolling.*/
+    background-attachment:scroll;
+    /*Removed Background Margins*/
+    height:100%;
+    padding: 10vmin;
+    /* Centers */
+    margin: auto;
+    /* Push the below the fold element out of view */
+/*    margin-bottom: 5%;*/
+}
+
+#atf, #btf{
+    /* FOR SOME REASON REMOVING THIS BREAKS THE NAV BAR, SO DON'T TOUCH IT */
+    display:inline-block;
+    /*Set Margins*/
+    margin-top:15%;
+    /* The background is black but with 80% opacity.*/
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.content{
+    /*position:relative;
+    top:30%;*/
+}
+
+.edgeElement{
+    width: 25%;
+}
+
+.middleElement{
+    width: 50%;
+}
+
+.basicBorder{
+    border-width:0.5vw;
+    border-style: solid;
+    border-color:rgba(0, 0, 0, 0.2);
+}
+
+.autotext{
+    font-size:3.5vmin;
+}
+
+.navElement{
+    text-align:center;
+    color:white;
+
+}
+
+
+
+#footer{
+    display:flex;
+    margin-left:2%;
+    margin-right:2%;
+    padding:5px;
+
+   /* clear: both;*/
+    margin-top:3%;
+    position: relative;
+    bottom: 3%;
+    height: 6%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.textfooterR{
+    text-align: right;
+    position: relative;
+    padding-left:5%;
+    padding-right:5%;
+    color:white;
+    font-size:1.7vmax;
+    font-family: Courier New;
+}
+
+.textfooterL{
+    text-align: left;
+    position: relative;
+    padding-left:5%;
+    padding-right:5%;
+    color:white;
+    font-size:1.7vmax;
+    font-family: Courier New;
+}
+

@@ -1,0 +1,7 @@
+cookie: "<UUID>,Username"
+
+Datastore: Username
+				UUID
+				BlogData
+
+Memcache: Marshal/Unmarshal

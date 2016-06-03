@@ -1,0 +1,35 @@
+<DOCTYPE! HTML>
+<html>
+	<head>
+		<title>Lorem Ipsum</title>
+	</head>
+	<body style="background-color:black;">
+	<style>
+		p{color:white;}
+	</style>
+		<form method="POST">
+			<p><input type = "submit"></p>
+			<p>New Password<br> <input type="password" name="userPasswordInput"></p>
+			<p>Old Password<br> <input type="password" name="oldPasswordInput"></p>
+			<p>CSS
+				<p>
+					<select name="cssStyle">
+					<option value="style1">style1</option>
+					<option value="style2">style2</option>
+					<option value="style3">style3</option>
+				</p>
+			</p>
+			</select>
+			<p>Blog Title<br> 		<textarea rows="10" cols="50" name="blogTitleInput">{{.BlogTitle}}</textarea></p>
+			<p>Blog Title Body<br> 	<textarea rows="10" cols="50" name="blogTitleBodyInput">{{.BlogTitleBody}}</textarea></p>
+			<p>Left Title<br> 		<textarea rows="10" cols="50" name="leftTitleInput">{{.LeftTitle}}</textarea></p>
+			<p>Left Body<br> 		<textarea rows="10" cols="50" name="leftBodyInput">{{.LeftBody}}</textarea></p>
+			<p>Blog Body<br> 		<textarea rows="10" cols="50"  name="blogBodyInput">{{.BlogBody}}</textarea></p>
+			<p>Right Title<br> 		<textarea rows="10" cols="50"  name="rightTitleInput">{{.RightTitle}}</textarea></p>
+			<p>Right Body<br> 		<textarea rows="10" cols="50"  name="rightBodyInput">{{.RightBody}}</textarea></p>
+			<p>Left Footer<br> 		<textarea rows="10" cols="50"  name="leftFooterInput">{{.FooterLeft}}</textarea></p>
+			<p>Right Footer<br> 	<textarea rows="10" cols="50"  name="rightFooterInput">{{.FooterRight}}</textarea></p>
+			<p><a href = "file">Manage Images</a></p>
+		</form>
+	</body>
+</html>

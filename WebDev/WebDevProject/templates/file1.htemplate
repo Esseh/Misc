@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+<body>
+	{{if  .Username}}
+		{{.Username}}
+	{{else}}
+		Error: No Username
+	{{end}}
+</body>
+</head>
+</html>

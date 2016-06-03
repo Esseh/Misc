@@ -1,0 +1,9 @@
+HandleFiles,HandleFunctions,and Load Files should be variadic functions.
+
+
+{{string,string,string}..} -> HandleFiles
+
+{{string,func(http.ResponseWriter, *http.Request)}..} -> HandleFunctions
+
+0,{{string,&string}..} -> Load Files
+

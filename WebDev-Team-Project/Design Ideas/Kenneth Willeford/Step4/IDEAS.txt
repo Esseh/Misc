@@ -1,0 +1,49 @@
+Have multiple page styles for whatever website we decide to make, and allow the user(after logging in)
+to switch their page style, but only from their perspective (aka on their machine).
+
+
+- Multiple Style Ideas:
+
+
+
+
+Blog with a Comment Section
+
+
+Uploadable Files(Google Cloud): 
+		<USER>/jpg/*.jpg
+		<USER>/png/*.png
+
+Uploadable in edituser
+
+Edituser:
+	Change Password:
+	Confirm Old Password: 
+	Change Style: [dropdown list]
+	Blog Title:
+	Blog Content:
+	Blog Leftbar:
+	Blog Rightbar:
+	Blog Footer:
+	Range:
+		*.jpg,delete
+	Range:	
+		*.png,delete
+
+	UPLOAD FILE
+Login:
+	Check for EVERYTHING
+
+Register:
+	Add Confirm Password Field
+	Add First Name Field
+	Add Last Name Field
+	Add Age Field
+	Check for EVERYTHING
+
+
+HomePage:
+	Login
+	Range:
+		User Blogs
+BlogPage: template based on index.html

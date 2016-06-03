@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Lorem Ipsum</title>
+		<meta charset = "UTF-8">
+	</head>
+	<body style="background-color:black;">
+	<style>
+		p{color:white;}
+	</style>
+		<p>Log In
+		<br>
+		<div style="color:red;" id="errorText"></div>
+				<p>Username<br><input type="text" id="userNameInput"></p>
+				<p>Password<br><input type="password" id="userPasswordInput"></p>
+				<p><input type="submit" onclick="userCheck()"></p>
+		</p>
+		<p>
+		Not yet a user? <a href="/register">Register</a>.
+		</p>
+		<form method="POST" id="iform"></form>
+	</body>
+	<script>
+		var redirect = function(url, method) {
+			document.getElementById("iform").action = url;
+			document.getElementById("iform").submit();
+		};
+		function userCheck(){
+			// Get username and password inputted.
+			username = document.getElementById("userNameInput").value
+			password = document.getElementById("userPasswordInput").value
+			// Make first AJAX request.
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					// If the username doesn't exist say so and do nothing else.
+					if(xhttp.responseText != "exists"){
+						document.getElementById("errorText").innerHTML = "That Username Doesn't Exist"
+					} else {
+						// Otherwise if the username is good begin another AJAX request.
+						var xhttp2 = new XMLHttpRequest();
+						xhttp2.onreadystatechange = function(){
+							if(xhttp2.readyState == 4 && xhttp2.status == 200){
+								if(xhttp2.responseText == "good password"){
+									// If password is good perform the redirect.
+									redirect('/login/?username='+username+'&password='+password, 'post');
+								} else {
+									// Otherwise tell the user it's not a good password.
+									document.getElementById("errorText").innerHTML = "The Password is Incorrect"
+								}
+							}
+						};
+						// Send second AJAX
+						xhttp2.open("GET", "/passwordisgood/?username="+username+"&password=" + password, true);
+						xhttp2.send();
+					};
+				};
+			};
+			// Send the first request.
+			xhttp.open("GET", "/usernameexists/?username=" + document.getElementById("userNameInput").value, true);
+			xhttp.send();
+		};
+	</script>
+</html>

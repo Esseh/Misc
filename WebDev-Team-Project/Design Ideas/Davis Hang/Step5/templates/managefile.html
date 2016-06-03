@@ -1,0 +1,34 @@
+<DOCTYPE! HTML>
+<html>
+	<head>
+		<title>Lorem Ipsum</title>
+	</head>
+	<body style="background-color:black;">
+	<style>
+		p{color:white;}
+	</style>
+		<p>Your Images</p>
+		{{range $index, $element := .Images}} 
+			<p><img src = https://storage.googleapis.com/essys-bucket/{{$element}}> </p>
+			<p id = "{{$element}}"></p>
+			<p><button onclick="deleteImage({{$element}})">Delete File</button></p>
+		{{end}}
+		<form enctype="multipart/form-data" method="POST">
+			<p>Upload Image (.jpg and .png accepted)</p>
+			<input type="file" name="fileUpload" accept="image/x-png, image/jpeg" />
+			<input type ="submit" />
+		</form>
+	</body>
+	<script>
+		function deleteImage(ele){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					document.getElementById(ele).innerHTML = "This Image Will Be Gone Upon Refresh";
+				};
+			};
+			xhttp.open("GET", "removeimage/?key=" + ele, true);
+			xhttp.send();
+		};
+	</script>
+</html>

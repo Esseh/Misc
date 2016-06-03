@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Badass Blog</title>
+</head>
+<body style="background-color:black;">
+<style>
+    p{color:white;}
+    .container{
+        position: relative;
+        background-color:#4C0A38;
+    }
+    .center {
+        background-color: deepskyblue;
+        position: absolute;
+        left: 0;
+        top: 5%;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .button{
+        background-color: black;
+        border: none;
+        border-radius: 5% ;
+        color: white;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+</style>
+<div class="container">
+    <div class="center">
+<p>Your Images</p>
+{{range $index, $element := .Images}}
+<p><a href = https://storage.googleapis.com/essys-bucket/{{$element}}>{{$element}}</a> </p>
+<p id = "{{$element}}"></p>
+<p><button onclick="deleteImage({{$element}})">Delete File</button> <br>
+    <a href="https://storage.googleapis.com/essys-bucket/{{$element}}" download="{{$element}}" class="button">Download</a></p>
+{{end}}
+<form enctype="multipart/form-data" method="POST">
+    <p>Upload Image (.jpg and .png accepted)</p>
+    <input type="file" name="fileUpload" accept="image/x-png, image/jpeg" />
+    <input type ="submit" />
+
+</form>
+        </div>
+    </div>
+</body>
+<script>
+    function deleteImage(ele){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById(ele).innerHTML = "This Image Will Be Gone Upon Refresh";
+            };
+        };
+        xhttp.open("GET", "removeimage/?key=" + ele, true);
+        xhttp.send();
+    };
+</script>
+</html>

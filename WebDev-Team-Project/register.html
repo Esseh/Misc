@@ -1,0 +1,23 @@
+<DOCTYPE! HTML>
+<html>
+	<head>
+		<title>Lorem Ipsum</title>
+	</head>
+	<body style="background-color:black;">
+	<style>
+		p{color:white;}
+	</style>
+		{{if .NoGood}}
+			<p style="color:red;">Username already taken.</p>
+		{{else}}
+		{{end}}
+		<p>Register
+			<form method="POST">
+				<p>Username: <input type="text" name="userNameInput"></p>
+				<p>Password: <input type="password" name="userPasswordInput"></p>
+				<p><input type="submit"></p>
+			</form>
+		</p>
+	</body>
+</html>
+	

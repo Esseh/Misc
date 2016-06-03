@@ -1,0 +1,29 @@
+1. How Does the Drop Down Navigation Work?
+	css selectors
+
+.dropDown:hover .dropDownItems ,.dropDown:focus .dropDownItems{
+	/*Display the block*/
+	display:block;
+	/*Set the block's width to the width of its parent.*/
+	width:100%;
+}
+
+The hover selector activates the css when the mouse hovers over 
+an item(in this case drop down)
+The focus selector is for tapping on mobile.
+
+
+
+
+2. Why doesn't the drop down element show normally?
+.dropDownItems{
+	/*Don't show the drop down list initially.*/
+	display: none;
+	/*Attatch it to dropdown*/
+	position: absolute;
+	/*Set background to maroon.*/
+	background-color: #4C0A38;
+}
+
+Initially dropDownItems has a display: none;
+which will prevent it from being shown until the css selector is activated

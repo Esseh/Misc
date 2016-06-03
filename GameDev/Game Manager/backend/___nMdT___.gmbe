@@ -1,0 +1,11 @@
+//abstraction for init/dispose adds into the hash table automatically and also declares it.
+#define makeInit(n) identifier=n; initializers.insert({identifier,[](){
+#define makeDispose }}); disposers.insert({identifier,[](){G::clear();
+#define endID }});
+
+
+
+//abstraction for event/update adds into the hash table automatically and also declares it.
+#define makeEvent(n) identifier=n; eventSequences.insert({identifier,[](){if(event.type==Event::Closed){currentScene = -1;}
+#define makeUpdate }}); updateSequences.insert({identifier,[](){G::updateAll();
+#define endEU }});

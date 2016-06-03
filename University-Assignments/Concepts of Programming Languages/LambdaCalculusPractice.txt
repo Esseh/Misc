@@ -1,0 +1,22 @@
+Python List Implementation
+
+list   = lambda x:[x,[]]
+prepend= lambda y,x:[y,x]
+append = lambda y,x: [y,[]] if x==[] else prepend(x[0],append[y,x[1]])
+length = lambda x:0 if x==[] else 1+length[x[1]]
+head   = lambda x:x[0]
+tail   = lambda x:x[1]
+filter = lambda x,y:[] if x==[] else prepend(x[0],filter(x[1],y)) if y[x[0]] else filter(x[1],y)
+map    = lambda y,x:[] if x==[] else prepend(y[x[0]],map(y,x[1]))
+reduce = lambda x,y:x[0] if x[1] ==[] else y(x[0],reduce(x[1],add))
+
+pair = lambda x,y:[x,y]
+
+
+Python Binary Search Tree Implementation
+
+bst = lambda key,value:[key,value,[],[]]
+bstInsert = lambda k,v,t:[k,v,t[2],t[3]] if t[0] == k else [t[0],t[1],[k,v,[],[]],t[3]] if k < t[0] and t[2] == [] else [t[0],t[1],t[2],[k,v,[],[]]] if k > t[0] and t[3] == [] else [t[0],t[1],bstInsert(k,v,t[2]),t[3]] if k < t[0] else [t[0],t[1],t[2],bstInsert(k,v,t[3])] 
+bstFind = lambda k,t:None if t == [] else t[1] if k == t[0] else bstFind(k,t[2]) if k < t[0] else bstFind(k,t[3])
+bstDelete = lambda k,t:[] if t==[] else [k,None,t[2],t[3]] if k == t[0] else [t[0],t[1],bstDelete(k,t[2]),t[3]] if k < t[0] else [t[0],t[1],t[2],bstDelete(k,t[3])]
+

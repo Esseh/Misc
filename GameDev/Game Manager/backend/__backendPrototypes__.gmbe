@@ -1,0 +1,61 @@
+//Game Manager
+//This is the main backend system.
+//This holds a list of initializers, a list of event sequences, a list of update sequences, a list of disposers, the initializer, and the main game loop.
+//It's job is to run the game from information entered into headers.
+namespace GameManager{
+    Event event;
+    RenderWindow window;
+    namespace{
+
+
+		//Holds the list of initializers.
+        unordered_map<int,func> initializers;
+		//Holds the list of event sequences.
+        unordered_map<int,func> eventSequences;
+		//Holds the list of update sequences.
+        unordered_map<int,func> updateSequences;
+		//Holds dispose subroutines.
+        unordered_map<int,func> disposers;
+		//Main init function, begins game with relevant scene id.
+        void initialize(int);
+		//The main game loop, controlled through abstractions in the header files.
+        void gameLoop();
+		//Fetches a relevant function from one of the unordered maps.
+        func masterFetch(int,unordered_map<int,func>);
+    }
+	//Begins the GameManager.
+    void run(int firstScene);
+}
+
+//The Graphics Module
+namespace G{
+    namespace{
+			//Holds a list of textures with their filename as the ID, this is to ensure that duplicate textures are not placed in the GPU.
+            unordered_map<string,Texture>textures;
+			//The base game object. This is expanded through the userObjectData.h header file.
+            class GameObject{public:
+                #include"../userDefinitions/userGameObjectData.h"	//Can define new values for the base GameObject here that it's children can inherit.
+                Sprite  s;
+				virtual void draw()=0;
+				virtual simulate()=0;
+            };
+			//This header is meant to create extended GameObjects for use in different places, ie: The player or enemies or even bullets.
+			//Vector is used for spatial locality, this allows faster access for resources that are persistent.
+            vector<pair<int,GameObject*> >highSpeedGraphics;
+			//List is used for objects that need to be added/removed quickly as the cost of doing so would be high in vector.
+			//Unfortunately this means a loss of speed due to a lack of spatial locality.
+            list<pair<int,GameObject*> >lowSpeedGraphics;
+			//This clears the texture and graphic containers.
+            void clear();
+    }
+    //updates all graphic objects in containers.
+    void updateAll();
+	//This checks against a filename in order to assign a sprite automatically to an object.
+	//It performs the checks to make sure textures are being used efficiently. Furthermore the sprite will be marked with a numerical id.
+	template<typename T>
+    void addSpriteFast(int,string,Sprite,T);
+	template<typename T>
+    void addSpriteSlow(int,string,Sprite,T);
+	//Searches the containers to find an entry with the relevant id for when direct modification is ABSOLUTELY necessary outside of the object.
+    GameObject* getSprite(int);
+}

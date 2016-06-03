@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+</title>
+</head>
+<body>
+	<div id = "container">
+	</div>
+	<script type="text/javascript">
+		// Build the list
+		var printUnorderedList = function(){
+			var unorderedList = [];
+			unorderedList["a"] = "I'm ";
+			unorderedList["b"] = "a ";
+			unorderedList["c"] = "little ";
+			unorderedList["d"] = "teapot!";
+			for(var key in unorderedList){
+				document.getElementById("container").innerHTML +=  ("<p id = \""+key+"\">" + unorderedList[key] + "</p>");
+			}; 
+			for(var key in unorderedList){
+				document.getElementById(key).addEventListener("click", function(){
+						alert(this.innerHTML);
+				});
+			};	
+		};
+		printUnorderedList();
+	</script>
+
+</body>
+</html>

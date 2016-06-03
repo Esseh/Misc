@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;Arlene Cazarez&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../golang.org" />
+      <root url="file://$PROJECT_DIR$/../../../../google.golang.org" />
+      <root url="file://$PROJECT_DIR$/../../.." />
+    </CLASSES>
+    <SOURCES />
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>

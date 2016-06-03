@@ -1,0 +1,253 @@
+html{
+	/*Removing default padding and margin from html tag*/
+	padding:0;
+	margin:0;
+}
+
+
+body {
+	/*Background Image Set*/
+	background-image:url("/public/images/background.jpg");
+	/*Background Image Stretched to Cover Screen*/
+	background-size:cover;
+	/*Background is Fixed in Place so it doesn't move while scrolling.*/
+	background-attachment:fixed;
+	/*Removed Background Margins*/
+	margin:0;
+}
+
+
+/* The Navigation Bar*/
+#nav{
+	/*Set the Background Color of the Bar to Maroon*/
+	background-color: #4C0A38;
+	/*Set text inside the bar to the color white.*/
+	color:white;
+	/*Fix the Bar so that it wont move with scrolling.*/
+	position: fixed;
+	/*Make sure nothing can be on top of it.*/
+	z-index: 3000;
+	/*Stretch Across the Width of the Screen*/
+	width: 100%;
+	/* Set Navigation Bar as a flex container */
+	display: inline-flex;
+
+}
+
+.button{
+	background-color: black;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+}
+
+
+
+/*The logo element. Leftmost part of Navigation Bar*/
+.logo{
+	/* Place First in the Navbar */
+	order:0;
+	/*Display the logo.*/
+	background-image:url("/public/images/logo.png");
+	/*Resize the logo so it fits inside the div container.*/
+	background-size: contain;
+	/*Center it in the div container*/
+	background-position: center;
+	/*Allow it to repeat itself but only on the horizontal*/
+	background-repeat: repeat-x;
+	/* Take up 25% of the navbar (technically the screen)*/
+	width:25%;
+}
+
+/* Outer Navigation Section*/
+.navSection{
+	/* Place Second in the Navbar*/
+	order:1;
+	/* Take up 50% of the navbar (technically the screen)*/
+	width:50%;
+	/* Align the text to the center */
+	text-align:center;
+}
+
+/*The login element, the rightmost part of the navigation bar.*/
+.login{
+
+	display:inline-flex;
+	/* Place Last in the Navbar */
+	order:2;
+	/* Take up 25% of the navbar (technically the screen)*/
+	width:25%;
+	/* Align the text to the center */
+	text-align:center;
+}
+
+
+/* The Drop Down Navigation Menu, the Middle Part of the Navigation Bar*/
+.dropdown{
+	/*Set Position to Relative to catch the dropdown items.*/
+	position: relative;
+}
+
+
+/* The actual items that drop down. The links that are able to be used to nav.*/
+.dropDownItems{
+	/*Don't show the drop down list initially.*/
+	display: none;
+	/*Attatch it to dropdown*/
+	position: absolute;
+	/*Set background to maroon.*/
+	background-color: #4C0A38;
+}
+
+/* When hovering over(browsers) or it's in focus(mobile devices) */
+.dropDown:hover .dropDownItems ,.dropDown:focus .dropDownItems{
+	/*Display the block*/
+	display:block;
+	/*Set the block's width to the width of its parent.*/
+	width:100%;
+}
+
+
+/* Title Element*/
+.title{
+	/*Text Color is White*/
+	color:white;
+	/*Set Font Size Relative to Viewport*/
+	font-size:4.5vmin;
+	/*Align Text to Center*/
+	text-align:center;	
+	/*Set text font to Courier New*/
+	font-family: Courier New;
+}
+/* Text Body Element */
+.textbody{
+	/*Move away from the left side of the container.*/
+	/*'squishing it from the left'*/
+	padding-left:5%;
+	/*Move away from the right side of the container.*/
+	/*'squishing it from the right'*/
+	padding-right:2%;
+	/*Set Text Color to White*/
+	color:white;
+	/*Set the Font to Courier New*/
+	font-family: Courier New;
+}
+
+/*Above the Fold Element*/
+#atf{
+	padding: 10vmin;
+	/* Centers */
+	margin: auto;
+	/* Push the below the fold element out of view */
+	margin-bottom: 5%;
+}
+
+
+
+/*The Above the Fold and Below the Fold Containers, holds important content*/
+#atf, #btf{
+	/* FOR SOME REASON REMOVING THIS BREAKS THE NAV BAR, SO DON'T TOUCH IT */
+	display:inline-block;
+	/*Set Margins*/
+	margin-top:15%;
+	/* The background is black but with 80% opacity.*/
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+/*The content container inside of atf*/
+.content{
+
+}
+
+/* Media Query, if the screen width is less than 400px hide the sidebars and footer image.*/
+@media all and (max-width: 400px) {
+	#leftColumn  , #rightColumn, #footerImg {
+		display: none;
+	}
+}
+
+/* Adds a simple border to anything with this class. */
+.basicBorder{
+	/*Set border width*/
+	border-width:3px;
+	/*Solid Border*/
+	border-style: solid;
+	/*Border color just applies a small alpha filter over the element's background.*/
+	border-color:rgba(0, 0, 0, 0.2);
+}
+
+/* Any text holding container with this class will have it's text adjusted based
+on the viewport.*/
+.autotext{
+	font-size:3.5vmin;
+}
+
+/* The below the fold element. */
+#btf{
+	/* The flex container is arranging it into columns */
+	display:inline-flex;
+	/* Note that the containers are swapped opposite of their div container order. */
+	flex-direction: row-reverse;
+	color:white;
+}
+
+
+/* Footer Element */
+#footer{
+	/* Enforce Container as Flex Container */
+    display:inline-flex;
+	/* Stretch Across the Screen */
+	width: 100%;
+	/* Set Margins to add a little space at top and bottom. */
+    margin-top:3%;
+    bottom: 3%;
+	/* Set Background Color to 80% opacity black background*/
+    background-color: rgba(0, 0, 0, 0.8);
+	/*Set text color in container to white*/
+	color:white;
+	/* Set font size relative to viewport */
+    font-size:1.7vmax;
+	/* Set font to Courier New */
+    font-family: Courier New;
+}
+
+/* Right Footer Element */
+.textfooterR{
+	/* Set to be second item in flex container */
+	order: 1;
+	/* Center with Flex Container */
+	margin:auto;
+}
+
+/* Left Footer Element */
+.textfooterL{
+	/* Set to be third item in flex container. */
+	order: 2;
+	/* Center with Flex Container */
+	margin:auto;
+}
+
+/* Footer Image */
+#footerImg{
+	/* Set to be first item in flex container */
+	order: 0;
+	/* Center with Flex Container */
+	margin:auto;
+	/* Set Maximum Size of the Image, it will change relative to the viewport. */
+	max-width:60%;
+	max-height:60%;
+}
+
+/* TOP Button */
+#to-the-top {
+	/* Keep Top Button in bottom right corner even as scrolling. */
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+}

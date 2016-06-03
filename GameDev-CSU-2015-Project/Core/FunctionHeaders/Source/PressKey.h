@@ -1,0 +1,1 @@
+bool PressKey(string input);

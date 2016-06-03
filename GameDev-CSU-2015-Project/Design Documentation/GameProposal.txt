@@ -1,0 +1,15 @@
+CSCI 191T: Game Development
+Project Proposal
+"Hail of Fire"
+
+Short Description: This game will be a side scrolling, shoot 'em up game using procedural background generation. 
+
+Detailed Description:  
+The player's objective is to move a fighter jet around the screen and fire at oncoming enemy fighters, in addition to tank and battleship fire. 
+The range of flight will be limited by the area within their screen with a bird's eye view of their surroundings. 
+The player must also avoid buildings and other oncoming fighter planes to avoid being destroyed. 
+The fighter jet's health points will be a shield that has the ability to recover from damage over a period of time. 
+If the player’s fighter jet is destroyed from enemy fire or multiple collisions, then the game will be restarted from the beginning of the level. 
+At the end of the level, the player must engage in a boss battle to win the game. 
+We’ll be using C++ and SFML library to develop the game. 
+We’ll also be exploring in procedural background generation to spawn random backgrounds, enemies, and obstacles within the player's surroundings. 

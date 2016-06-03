@@ -1,0 +1,101 @@
+namespace GameManager{
+    namespace{
+        int currentScene;
+        //Initializes before the game loop.
+        void initialize(int i){currentScene = i; int identifier = 0;
+        #include"../userFrontend/userFirstInit.h"                   //User defined items can be initialized here.
+        #include"../userFrontend/userMake.h"                       //Set up Scene Inits/Disposes Here.
+        #include"../userFrontend/userEvents.h"                      //Set up Scene Events/Updates Here.
+        }
+        //The main game loop. It is controlled by many abstractions.
+
+        void gameLoop(){
+            GameManager::window.create(VideoMode(WIDTH,HEIGHT),TITLE);
+            while(true){
+                //Hold Original Scene ID for consistency checks.
+                int activeScene = currentScene;
+                //Grab Functions
+                func initializeScene = masterFetch(activeScene,initializers);
+                func runEvents = masterFetch(activeScene,eventSequences);
+                func update = masterFetch(activeScene,updateSequences);
+                func dispose = masterFetch(activeScene,disposers);
+
+                //Initialize Scene
+                initializeScene();
+                //While Scene ID is consistent don't change...
+                while(activeScene == currentScene && window.isOpen()){
+                    while(GameManager::window.pollEvent(event)){
+                        runEvents();        //Run the Scene's Events
+                    }
+                        update();           //Run the Scene's Updates
+                }
+                dispose();                  //If changing scene/ending game then cleanup.
+                if(currentScene < 0){break;}
+            }
+            GameManager::window.close();
+        }
+        //Fetches from relevant group using key.
+        func masterFetch(int key,unordered_map<int,func> group){
+            return (*group.find(key)).second;
+        }
+    }
+    //Starts the Engine
+    void run(int firstScene){initialize(firstScene); gameLoop();}
+}
+
+namespace G{
+    namespace{
+   			#include"../userDefinitions/userGraphics.h"        //User defined extensions of the graphic object go here.
+   			//Completely clears the graphic resources out of the containers.
+            void clear(){
+                for(auto i = highSpeedGraphics.begin(); i!=highSpeedGraphics.end(); i++){
+                    delete (*i).second; highSpeedGraphics.clear();}
+                for(auto i = lowSpeedGraphics.begin(); i!=lowSpeedGraphics.end(); i++){
+                    delete (*i).second; lowSpeedGraphics.clear();}
+                textures.clear();
+            }
+    }
+    //Adds sprites into update loop, sets their image, and reuses textures if possible to keep things lighter on GPU.
+	template<typename T>
+    void addSpriteFast(int id,string filename,T obj){
+        if(textures.find(filename)==textures.end())
+        {
+            Texture temp;
+            temp.loadFromFile(filename);
+            textures.insert({filename,temp});
+        }
+        obj.sprite.setTexture(textures.find(filename)->second);
+        highSpeedGraphics.push_back(obj);
+    }
+	template<typename T>
+    void addSpriteSlow(int id,string filename,T obj){
+        if(textures.find(filename)==textures.end())
+        {
+            Texture temp;
+            temp.loadFromFile(filename);
+            textures.insert({filename,temp});
+        }
+        obj.sprite.setTexture(textures.find(filename)->second);
+        lowSpeedGraphics.push_front(obj);
+    }
+    //Seriously, ONLY USE THIS IF YOU NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED IT.
+    GameObject* getSprite(int key){
+        for(auto i = highSpeedGraphics.begin(); i!=highSpeedGraphics.end(); i++){
+            if((*i).first == key) return (*i).second;}
+        for(auto i = lowSpeedGraphics.begin(); i!=lowSpeedGraphics.end(); i++){
+            if((*i).first == key) return (*i).second;}
+        return NULL;
+    }
+    //updates all graphic objects in containers.
+    void updateAll(){
+        for(auto i = highSpeedGraphics.begin(); i!=highSpeedGraphics.end(); i++){
+            (*i).second->draw();}
+        for(auto i = lowSpeedGraphics.begin(); i!=lowSpeedGraphics.end(); i++){
+            (*i).second->draw();}
+    }
+}
+
+
+///MACROS FOR USE IN USER FILES//
+///Add user guidelines in user files as well.
+#include"___nMdT___.gmbe"

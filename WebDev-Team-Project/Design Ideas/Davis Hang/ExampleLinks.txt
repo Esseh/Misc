@@ -1,0 +1,23 @@
+EXAMPLES
+	Step 2 serving and handling
+	https://github.com/SSBMFreak/WebDev/blob/master/FirstHostedWebsite/main.go
+
+	Step 2 Cookies and State
+	https://github.com/SSBMFreak/WebDev/blob/master/Exercises2/uuid.go
+
+
+Instructions-
+	Handle the CSS folder
+	Have two page handlers
+		"/"
+			This page executes a template "index.html" with a nil object
+			After executing the template if a cookie session-info exists it will print the uuid after executing the template
+				fmt.Fprintf(res,cookie.uuid)
+		"/login/"
+			This page will check if a cookie session-info exists
+			If so it will do nothing.
+			Otherwise it will make the cookie session-info.
+			Despite the name we wont be executing "login.html"
+			
+			Regardless of what it does, it will redirect to "/"
+			afterwards.
