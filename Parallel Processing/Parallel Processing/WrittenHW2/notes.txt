@@ -1,0 +1,19 @@
+E = Ts / Tp
+
+Ts = n
+Tp = n/p + log2(p)
+
+E = n/((n/p)+log2(p))
+E = (x*n)/(((x*n)/p)+log2(p))
+E = (x*n)/(((x*n)/(p*k))+log2(p*k))
+
+E = (x*n)/((x*n)/(p*k))+(x*n)/log2(p*k)
+E = (x*n)(p*k)/(x*n)+(x*n)/log2(p*k)
+E = (p*k)+(x*n)/log2(p*k)
+E*log2(p*k) = (p*k)*log2(p*k)+(x*n)
+(x*n) = E*log2(p*k) - (p*k)*log2(p*k)
+x = (E*log2(p*k) - (p*k)*log2(p*k))/n
+
+Constant Efficiency, 8 and 16
+x = (log2(8) - 8*log2(8))/n			;	x = (3 - 8*3)/n  ; x*n = (-21) ; 
+x = (log2(16) - 16*log2(16))/n		;	x = (4 - 16*4)/n ; x*n = (-60) ; 

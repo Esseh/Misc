@@ -1,0 +1,45 @@
+L = rows of A, rows of C
+m = columns of A, rows of B
+n = columns of B, columns of C
+
+L = 1003
+m = 2000
+n = 3000
+
+
+[]...2000...[]   []...3000...[]   []...3000...[]
+.           .    .            .   .            .
+.           .    .            .   .            .
+.           .    .            .   .            .
+1           1    2            2   1            1
+0           0    0            0   0            0
+0           0    0            0   0            0
+3           3    0            0   3            3
+.           .    .            .   .            .
+.           .    .            .   .            .
+.           .    .            .   .            .
+[]...2000...[] x []...3000...[] = []...3000...[]
+
+Row Vector of 2000 dot Column Vector of 2000, 3000 instances, 1 row of output. GOOD
+Expecting 1003 Columns, to do so means that this process would have to repeat 1003 times, a has 1003 rows to work on. GOOD.
+
+L = rows of A, rows of C
+m = columns of A, rows of B
+n = columns of B, columns of C
+
+L = 4
+m = 3
+n = 2
+
+[1][2][3]   [0][1]   [1*0+2*1+3*2][1*1+2*2+3*3]   [8 ][14]
+[2][3][4]   [1][2]   [2*0+3*1+4*2][2*1+3*2+4*3]   [11][20]
+[3][4][5]   [2][3]   [3*0+4*1+5*2][3*1+4*2+5*3]   [14][26]
+[4][5][6] X        = [4*0+5*1+6*2][4*1+5*2+6*3] = [17][32]
+
+Manual Test Output
+[8 ][14]
+[11][20]
+[14][26]
+[17][32]
+
+GOOD, Checks out on n = 1,2,4,8 (works without powers of 2 as well)

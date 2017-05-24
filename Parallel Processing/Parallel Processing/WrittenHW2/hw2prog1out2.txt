@@ -1,0 +1,4 @@
+Enter a, b, and n -- each separated by a space:
+Thread_1, local_result = 2.91667e+023
+Thread_0, local_result = 4.16667e+022
+With n=1000000 trapezoids, our estimate of integral from 0 to 1e+008 is 3.33333e+023

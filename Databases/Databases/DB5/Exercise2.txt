@@ -1,0 +1,134 @@
+Find the names of all students who are friends with someone named Gabriel. 
+SELECT name
+FROM(
+    (SELECT ID2 AS ID
+    FROM (
+        (SELECT ID AS ID1
+        From Highschooler
+        WHERE name = "Gabriel")
+        NATURAL JOIN
+        Friend
+    ))
+    NATURAL JOIN
+    Highschooler
+)
+
+For every student who likes someone 2 or more grades younger than themselves, 
+return that student's name and grade, and the name and grade of the student they like. 
+SELECT name1,grade1,name2,grade2
+FROM(
+	(SELECT ID AS ID1,name AS name1,grade AS grade1 FROM Highschooler) 
+	NATURAL JOIN
+	Likes 
+	NATURAL JOIN
+	(SELECT ID AS ID2,name AS name2,grade AS grade2 FROM Highschooler)
+)
+WHERE grade1 - grade2 >= 2 OR grade1 - grade2 <= -2
+
+For every pair of students who both like each other, 
+return the name and grade of both students. 
+Include each pair only once,
+with the two names in alphabetical order. 
+SELECT name1,grade1,name2,grade2
+FROM(
+	(SELECT name1,grade1,name2,grade2
+	FROM(
+		(SELECT ID AS ID1,name AS name1,grade AS grade1 FROM Highschooler) 
+		NATURAL JOIN
+		Likes 
+		NATURAL JOIN
+		(SELECT ID AS ID2,name AS name2,grade AS grade2 FROM Highschooler)
+	))
+	CROSS JOIN
+	(SELECT name1 AS validate2,name2 AS validate1
+	FROM(
+		(SELECT ID AS ID1,name AS name1,grade AS grade1 FROM Highschooler) 
+		NATURAL JOIN
+		Likes 
+		NATURAL JOIN
+		(SELECT ID AS ID2,name AS name2,grade AS grade2 FROM Highschooler)
+	))
+)
+WHERE name1 = validate1 AND name2 = validate2 AND name1 < name2
+
+Find all students who do not appear in the Likes table (as a student who likes or is liked) and return their names and grades. 
+Sort by grade, then by name within each grade. 
+SELECT name,grade
+FROM(
+    SELECT name,grade FROM Highschooler 
+    EXCEPT
+	SELECT name,grade FROM ((SELECT ID1 AS ID FROM Likes
+	UNION
+	SELECT ID2 AS ID FROM Likes)
+	NATURAL JOIN
+	Highschooler)
+)
+ORDER BY grade,name
+
+
+For every situation where student A likes student B, 
+but we have no information about whom B likes (that is, B does not appear as an ID1 in the Likes table), 
+return A and B's names and grades. 
+SELECT name1,grade1,name2,grade2
+FROM(
+	(SELECT ID AS ID1,name AS name1,grade AS grade1 FROM Highschooler) 
+	NATURAL JOIN
+	Likes 
+	NATURAL JOIN
+	(SELECT ID AS ID2,name AS name2,grade AS grade2 FROM Highschooler WHERE ID2 IN (SELECT ID2 AS ID FROM Likes EXCEPT SELECT ID1 AS ID FROM Likes))
+)
+
+Find names and grades of students who only have friends in the same grade. Return the result sorted by grade, then by name within each grade. 
+SELECT n1,g1
+FROM(
+    (SELECT ID AS ID1, name AS n1, grade AS g1 FROM Highschooler)
+    NATURAL JOIN
+    Friend
+    NATURAL JOIN
+    (SELECT ID AS ID2, name AS n2, grade AS g2 FROM Highschooler)
+)
+GROUP BY n1,ID1
+HAVING MAX(g2) - MIN(g2) = 0
+ORDER BY g1, n1
+
+For each student A who likes a student B where the two are not friends, 
+find if they have a friend C in common (who can introduce them!). 
+For all such trios, return the name and grade of A, B, and C. 
+SELECT name1, grade1, name2, grade2, name3, grade3
+FROM(
+	(SELECT Like1ID,Like2ID,FriendID1
+	FROM(
+		(SELECT 
+			ID1 AS Like1ID,
+			ID2 AS Like2ID, 
+			ID1 AS ID1a, 
+			ID2 AS ID1b
+		FROM (SELECT * FROM Likes EXCEPT SELECT * FROM Friend))
+		NATURAL JOIN
+		(SELECT ID1 AS ID1a,ID2 AS FriendID1 FROM Friend)
+		NATURAL JOIN
+		(SELECT ID1 AS ID1b,ID2 AS FriendID2 FROM Friend)
+	)
+	WHERE FriendID1 = FriendID2)
+	NATURAL JOIN
+	(SELECT ID AS Like1ID, name AS name1, grade AS grade1 FROM Highschooler)
+	NATURAL JOIN
+	(SELECT ID AS Like2ID, name AS name2, grade AS grade2 FROM Highschooler)
+	NATURAL JOIN
+	(SELECT ID AS FriendID1, name AS name3, grade AS grade3 FROM Highschooler)
+)
+
+Find the difference between the number of students in the school and the number of different first names. 
+SELECT COUNT(name)-COUNT(DISTINCT name)
+FROM Highschooler
+
+Find the name and grade of all students who are liked by more than one other student. 
+SELECT name,grade
+FROM(
+	(SELECT ID2 AS ID
+	FROM Likes
+	GROUP BY ID2
+	HAVING COUNT(ID1) > 1)
+	NATURAL JOIN
+	Highschooler
+)

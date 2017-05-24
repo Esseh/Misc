@@ -1,0 +1,58 @@
+Return the area of Mongolia. 
+let $countries := doc("countries.xml")
+return data($countries//country[@name="Mongolia"]/@area)
+
+Return the names of all cities that have the same name as the country in which they are located. 
+let $countries := doc("countries.xml")
+for $c in $countries//city/name
+where data($c) = data($c/../../@name)
+return $c
+
+Return the average population of Russian-speaking countries. 
+let $res := (
+    let $countries := doc("countries.xml")
+    for $s in $countries//country//language
+    where $s = "Russian"
+    return data($s/../@population)
+)
+return avg($res)
+
+Return the names of all countries that have at least three cities with population greater than 3 million.
+let $countries := doc("countries.xml")
+return data($countries//country[count(city[population > 3000000]) >= 3]/@name)
+
+Create a list of French-speaking and German-speaking countries. The result should take the form:
+let $countries := doc("countries.xml")
+let $r1 := (
+    for $c in $countries//country
+    where $c/language = "French"
+    return <country>{data($c/@name)}</country>
+)
+let $r2 := (
+    for $c in $countries//country
+    where $c/language = "German"
+    return <country>{data($c/@name)}</country>
+)
+return <result>
+  <French>{$r1}</French>
+  <German>{$r2}</German>
+</result>
+
+
+Return the countries with the highest and lowest population densities. 
+Note that because the "/" operator has its own meaning in XPath and XQuery, the division operator is infix "div". 
+To compute population density use "(@population div @area)". 
+You can assume density values are unique. The result should take the form:
+let $countries := doc("countries.xml")
+let $densitys := (
+    for $cm in $countries//country
+    return $cm/@population div $cm/@area
+)
+let $minDensity := min($densitys)
+let $maxDensity := max($densitys)
+let $maxCountry := data($countries//country[@population div @area = $maxDensity]/@name)
+let $minCountry := data($countries//country[@population div @area = $minDensity]/@name)
+return <result>
+  <highest density="{$maxDensity}">{$maxCountry}</highest>
+  <lowest density="{$minDensity}">{$minCountry}</lowest>
+</result>

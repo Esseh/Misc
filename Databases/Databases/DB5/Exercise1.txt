@@ -1,0 +1,102 @@
+Find the titles of all movies directed by Steven Spielberg. 
+SELECT title
+FROM Movie
+WHERE director = 'Steven Spielberg'
+
+Find all years that have a movie that received a rating of 4 or 5, and sort them in increasing order. 
+SELECT DISTINCT year
+FROM (Movie NATURAL JOIN Rating)
+WHERE stars = 4 OR stars = 5
+ORDER BY year ASC
+
+Find the titles of all movies that have no ratings. 
+SELECT title
+FROM (
+    SELECT * FROM Movie LEFT OUTER JOIN Rating ON Rating.mID = Movie.mID
+    UNION
+    SELECT * FROM Rating LEFT OUTER JOIN Movie ON Rating.mID = Movie.mID
+)
+WHERE stars IS NULL
+
+Some reviewers didn't provide a date with their rating. Find the names of all reviewers who have ratings with a NULL value for the date. 
+SELECT name
+FROM (
+    SELECT * FROM Reviewer LEFT OUTER JOIN Rating ON Rating.rID = Reviewer.rID
+    UNION
+    SELECT * FROM Rating LEFT OUTER JOIN Reviewer ON Rating.rID = Reviewer.rID
+)
+WHERE ratingDate IS NULL
+
+Write a query to return the ratings data in a more readable format: reviewer name, movie title, stars, and ratingDate. 
+Also, sort the data, first by reviewer name, then by movie title, and lastly by number of stars. 
+SELECT name,title,stars,ratingDate
+FROM (
+	(Rating NATURAL JOIN Movie) NATURAL JOIN Reviewer
+)
+ORDER BY name,title,stars
+
+For all cases where the same reviewer rated the same movie twice and gave it a higher rating the second time, 
+return the reviewer's name and the title of the movie. 
+SELECT DISTINCT T1.name,T1.title
+FROM (
+	(Rating NATURAL JOIN Movie NATURAL JOIN Reviewer) AS T1 
+    CROSS JOIN 
+    (Rating NATURAL JOIN Movie NATURAL JOIN Reviewer) AS T2
+)
+WHERE ((T1.stars < T2.stars AND T1.ratingDate < T2.ratingDate) OR (T1.stars > T2.stars AND T1.ratingDate > T2.ratingDate)) AND T1.name = T2.name AND T1.title = T2. title
+
+For each movie that has at least one rating, find the highest number of stars that movie received. 
+Return the movie title and number of stars. Sort by movie title. 
+SELECT DISTINCT title AS t2,stars
+FROM Movie NATURAL JOIN Rating
+WHERE stars IN (
+    SELECT MAX(stars)
+    FROM Movie NATURAL JOIN Rating
+    WHERE t2 = title
+)
+ORDER BY title ASC
+
+For each movie, return the title and the 'rating spread', that is, 
+the difference between highest and lowest ratings given to that movie. 
+Sort by rating spread from highest to lowest, then by movie title. 
+SELECT title1, (starsMax - starsMin) AS ratingSpread
+FROM (
+	SELECT DISTINCT title AS title1,stars AS starsMax
+	FROM Movie NATURAL JOIN Rating
+	WHERE stars IN (
+		SELECT MAX(stars)
+		FROM Movie NATURAL JOIN Rating
+		WHERE title1 = title
+	)),
+	(
+	SELECT DISTINCT title AS title2,stars AS starsMin
+	FROM Movie NATURAL JOIN Rating
+	WHERE stars IN (
+		SELECT MIN(stars)
+		FROM Movie NATURAL JOIN Rating
+		WHERE title2 = title
+	))
+WHERE title1 = title2
+ORDER BY ratingSpread DESC,title1 ASC
+
+Find the difference between the average rating of movies released before 1980 and the average rating of movies released after 1980. 
+(Make sure to calculate the average rating for each movie, then the average of those averages for movies before 1980 and movies after. 
+Don't just calculate the overall average rating before and after 1980.) 
+SELECT before-after
+FROM (
+    SELECT AVG(subAverages) AS before
+    FROM (
+        SELECT AVG(stars) as subAverages
+        FROM Movie NATURAL JOIN Rating
+        WHERE year < 1980
+        GROUP BY title
+    )
+),(
+	SELECT AVG(subAverages) AS after
+	FROM (
+		SELECT AVG(stars) as subAverages
+		FROM Movie NATURAL JOIN Rating
+		WHERE year > 1980
+		GROUP BY title
+	)
+)

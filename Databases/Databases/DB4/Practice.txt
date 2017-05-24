@@ -1,0 +1,68 @@
+Find all pizzas eaten by at least one female over the age of 20. 
+project pizza (select (gender=="female")(Eats |<>| Person))
+\project_{pizza}(\select_{gender = 'female' and age > 20}(Eats \join Person))
+
+Find the names of all females who eat at least one pizza served by Straw Hat. 
+(Note: The pizza need not be eaten at Straw Hat.) 
+project name (select (gender=="female") (Person |<>| (select (pizzeria = "Straw Hat") (Eats |<>| Serves))))
+\project_{name}(\select_{gender = 'female'} (Person \join (\select_{pizzeria = 'Straw Hat'} (Eats \join Serves))))
+
+Find all pizzerias that serve at least one pizza for less than $10 that either Amy or Fay (or both) eat.
+project pizzeria (select ((name == "Amy" || name == "Fay") && price < 10) (Serves |><| Eats))
+\project_{pizzeria}(\select_{(name = 'Amy' or name = 'Fay') and price < 10} (Serves \join Eats))
+
+Find all pizzerias that serve at least one pizza for less than $10 that both Amy and Fay eat.
+\project_{pizzeria}(\select_{price < 10}((Serves) \join 
+((\project_{pizza} (\select_{name = 'Amy'} Eats )) 
+	\intersect 
+(\project_{pizza}(\select_{name = 'Fay'} Eats 
+)))))
+
+Find the names of all people who eat at least one pizza served by Dominos but who do not frequent Dominos.
+(\project_{name} (Eats \join (\project_{pizza}(\select_{pizzeria = 'Dominos'}Serves))))
+The list of all names of people who eat a pizza served at dominoes.
+
+(\project_{name}(\select_{pizzeria = 'Dominos'}Frequents))
+The list of all names of people who frequent dominoes
+
+(\project_{name} (Eats \join (\project_{pizza}(\select_{pizzeria = 'Dominos'}Serves)))) \diff (\project_{name}(\select_{pizzeria = 'Dominos'}Frequents))
+the answer
+
+Find all pizzas that are eaten only by people younger than 24, or that cost less than $10 everywhere they're served.
+(\project_{pizza}((\select_{age < 24}Person) \join Eats)) \diff (\project_{pizza}((\select_{age >= 24}Person) \join Eats))
+\union
+((((\project_{pizza}(\select_{price < 10}Serves))) \diff (\project_{pizza}((\select_{price >= 10}Serves)))))
+
+Find the age of the oldest person (or people) who eat mushroom pizza. 
+(\project_{age}(\select_{pizza = 'mushroom'}(Person \join Eats)))
+\diff
+(\rename_{age}(\project_{A1}(\rename_{A1}(\project_{age}(\select_{pizza = 'mushroom'}(Person \join Eats)))
+\join_{A1 < A2}
+\rename_{A2}(\project_{age}(\select_{pizza = 'mushroom'}(Person \join Eats))))))
+
+
+Find all pizzerias that serve only pizzas eaten by people over 30. 
+
+1. find what pizzas are only eaten by those over 30.
+(\project_{pizza}(\select_{age > 30}(Eats \join Person)))
+2. find the complement of 1 (pizzas only eaten by those below 30)
+((\project_{pizza}(Eats)) \diff (\project_{pizza}(\select_{age > 30}(Eats \join Person))))
+3. Find all pizzarias that contain 2
+(\project_{pizzeria}(Serves \join ((\project_{pizza}(Eats)) \diff (\project_{pizza}(\select_{age > 30}(Eats \join Person))))))
+4. Take the complement of all pizzarias to obtain the answer.
+(\project_{pizzeria}Serves) \diff (\project_{pizzeria}(Serves \join ((\project_{pizza}(Eats)) \diff (\project_{pizza}(\select_{age > 30}(Eats \join Person))))))
+
+
+Find all pizzerias that serve every pizza eaten by people over 30. 
+1. find all pizzas eaten by people over 30.
+(\project_{pizza}((\select_{age > 30}(Person)) \join (Eats)))
+2. find all pizzerias that serve a pizza eaten by people over 30.
+((\project_{pizza}((\select_{age > 30}(Person)) \join (Eats))) \join (Serves))
+3. (slightly cheating knowing there are only two such pizzas) take the cross product of itself.
+((\project_{pizza}((\select_{age > 30}(Person)) \join (Eats))) \join (Serves))
+\cross
+(\rename_{pizzab,pizzeriab,priceb}((\project_{pizza}((\select_{age > 30}(Person)) \join (Eats))) \join (Serves)))
+4. Find all pizzerias paired with itself, such that their two pizzas are not the same. 
+\project_{pizzeria}(\select_{(not (pizza = pizzab)) and (pizzeria = pizzeriab)}(((\project_{pizza}((\select_{age > 30}(Person)) \join (Eats))) \join (Serves))
+\cross
+(\rename_{pizzab,pizzeriab,priceb}((\project_{pizza}((\select_{age > 30}(Person)) \join (Eats))) \join (Serves)))))

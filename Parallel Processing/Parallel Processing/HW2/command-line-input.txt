@@ -1,0 +1,5 @@
+g++ parallel-sums.cpp -o parallel-sums.exe
+parallel-sums 1 400000000 > output1.txt
+parallel-sums 2 400000000 > output2.txt
+parallel-sums 4 400000000 > output4.txt
+parallel-sums 8 400000000 > output8.txt

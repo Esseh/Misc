@@ -1,0 +1,3 @@
+thread_id:0 start_index:0 end_index200000000 partial_sum:20000000100000000
+thread_id:1 start_index:200000000 end_index400000000 partial_sum:60000000100000000
+global_sum:80000000200000000time taken:0.83s

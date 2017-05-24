@@ -1,0 +1,48 @@
+Return all Title elements (of both departments and courses). 
+let $courses := doc("courses.xml")
+return $courses/*//Title
+
+Return last names of all department chairs. 
+let $courses := doc("courses.xml")
+return $courses//Chair/Professor/Last_Name
+
+Return titles of courses with enrollment greater than 500. 
+let $courses := doc("courses.xml")
+return $courses//Course[@Enrollment > 500]/Title
+
+Return titles of departments that have some course that takes "CS106B" as a prerequisite. 
+let $courses := doc("courses.xml")
+for $c in $courses//Department
+where data($c//Prereq) = "CS106B"
+return $c/Title
+
+
+Return last names of all professors or lecturers who use a middle initial. Don't worry about eliminating duplicates. 
+let $courses := doc("courses.xml")
+for $m in $courses//Middle_Initial
+return $m/../Last_Name
+
+
+Return the count of courses that have a cross-listed course (i.e., that have "Cross-listed" in their description). 
+let $res := (
+    let $courses := doc("courses.xml")
+    for $m in $courses//Course/Description
+    return count($m[contains(data($m),"Cross-listed")])
+)
+return sum($res)
+
+
+Return the average enrollment of all courses in the CS department. 
+let $courses := doc("courses.xml")
+return avg($courses//Department[@Code="CS"]//Course/@Enrollment)
+
+
+Return last names of instructors teaching at least one course that has "system" in its description and enrollment greater than 100. 
+let $courses := doc("courses.xml")
+for $i in $courses//Instructors//*/Last_Name
+where $i/../../../@Enrollment > 100 and contains(data($i/../../../Description),"system")
+return $i
+
+Return the title of the course with the largest enrollment. 
+let $courses := doc("courses.xml")
+return $courses//Course[@Enrollment = max($courses//Course/@Enrollment)]/Title
